@@ -2,68 +2,82 @@
 
 ## users テーブル
 
-| Column              | Type   | Options     |
-| ------------------- | ------ | ----------- |
-| nickname            | string | null: false |
-| email               | email  | null: false |
-| encrypted_password  | string | null: false |
-| fist_name           | string | null: false |
-| last_name           | string | null: false |
-| first_name_kana     | string | null: false |
-| last_name_kana      | string | null: false |
-| birthday_year       | date   | null: false |
-| birthday_month      | date   | null: false |
-| birthday            | date   | null: false |
+| Column              | Type   | Options                   |
+| ------------------- | ------ | ------------------------- |
+| nickname            | string | null: false               |
+| email               | string | null: false, unique: true |
+| encrypted_password  | string | null: false               |
+| fist_name           | string | null: false               |
+| last_name           | string | null: false               |
+| first_name_kana     | string | null: false               |
+| last_name_kana      | string | null: false               |
+| birthday            | date   | null: false               |
 
 ### Association
-
 - has_many :items
 - has_many :comments
 - has_many :purchases
+
+
 
 ## items テーブル
 
 | Column              | Type       | Options                        |
 | ------------------- | ---------- | ------------------------------ |
-| image               | blob       | null: false                    |
 | name                | string     | null: false                    |
-| explanation         | textarea   | null: false                    |
-| category            | string     | null: false                    |
-| product_status      | string     | null: false                    |
-| delivery_charge     | int        | null: false                    |
-| shipping_area       | string     | null: false                    |
-| shipping_date       | date       | null: false                    |
-| price               | int        | null: false                    |
+| explanation         | text       | null: false                    |
+| price               | integer    | null: false                    |
+| category_id         | integer    | null: false                    |ActiveHash
+| product_status_id   | integer    | null: false                    |ActiveHash
+| delivery_charge_id  | integer    | null: false                    |ActiveHash
+| prefectures_id      | integer    | null: false                    |ActiveHash
+| shipping_date_id    | integer    | null: false                    |ActiveHash
 | user                | references | null: false, foreign_key: true |
-### Association
 
+### Association
 - has_many   :comments
 - has_one    :purchase
 - belongs_to :user
+- belongs_to :category_activehash
+- belongs_to :product_status_activehash
+- belongs_to :delivery_charge_activehash
+- belongs_to :prefectures_activehash
+- belongs_to :shipping_date_activehash
+
+
 
 ## purchasesテーブル
 
 | Column           | Type       | Options                        |
 | ---------------- | ---------- | ------------------------------ |
-| card_namber      | int        | null: false,                   |
-| expiration_month | date       | null: false                    |
-| expiration_year  | date       | null: false                    |
-| security_code    | int        | null: false                    |
-| post_code        | int        | null: false                    |
-| prefectures      | string     | null: false                    |
-| municipalities   | string     | null: false                    |
-| street_number    | int        | null: false                    |
-| phone_number     | phone      | null: false                    |
-| items_price      | int        | null: false                    |
+| items_price      | integer    | null: false                    |
 | user             | references | null: false, foreign_key: true |
-| room             | references | null: false, foreign_key: true |
-
-
+| item             | references | null: false, foreign_key: true |
 
 ### Association
-
 - belongs_to :user
 - belongs_to :item
+- has_one    :shipping_info
+
+
+
+## shipping_info テーブル
+
+| Column           | Type       | Options                        |
+| ---------------- | ---------- | ------------------------------ |
+| post_code        | string     | null: false                    |
+| municipalities   | string     | null: false                    |
+| street_number    | string     | null: false                    |
+| building_name    | string     | null: false                    |
+| phone_number     | integer    | null: false                    |
+| prefectures_id   | integer    | null: false                    |ActiveHash
+| purchases        | references | null: false, foreign_key: true |
+
+### Association
+- belongs_to :purchase
+- belongs_to :prefectures_activehash
+
+
 
 ## comments テーブル
 
@@ -74,8 +88,57 @@
 | room    | references | null: false, foreign_key: true |
 
 ### Association
-
 - belongs_to :room
 - belongs_to :user
+
+
+## category_activehash テーブル
+| Column   | Type    | Options     |
+| -------- | ------- | ----------- |
+| category | string  | null: false  |
+
+### Assoceation
+- has_many  :items
+
+
+
+## product_status_activehash テーブル
+| Column  | Type    | Options      |
+| ------- | ------- | ------------ |
+| status  | string  | null: false  |
+
+### Assoceation
+- has_many  :items
+
+
+
+## delivery_charge_activehash テーブル
+| Column  | Type    | Options      |
+| ------- | ------- | ------------ |
+| charge  | integer | null: false  |
+
+### Assoceation
+- has_many  :items
+
+
+
+## prefectures_activehash テーブル
+| Column      | Type    | Options      |
+| ----------- | ------- | ------------ |
+| prefectures | string  | null: false  |
+
+### Assoceation
+- has_many  :items
+- has_many  :shipping_info 
+
+
+
+## shipping_date_activehash テーブル
+| Column  | Type    | Options      |
+| ------- | ------- | ------------ |
+| name    | string  | null: false  |
+### Assoceation
+- has_many  :items
+
 
 
