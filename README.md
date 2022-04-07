@@ -30,7 +30,7 @@
 | category_id         | integer    | null: false                    |ActiveHash
 | product_status_id   | integer    | null: false                    |ActiveHash
 | delivery_charge_id  | integer    | null: false                    |ActiveHash
-| prefectures_id      | integer    | null: false                    |ActiveHash
+| prefecture_id       | integer    | null: false                    |ActiveHash
 | shipping_date_id    | integer    | null: false                    |ActiveHash
 | user                | references | null: false, foreign_key: true |
 
@@ -50,7 +50,6 @@
 
 | Column           | Type       | Options                        |
 | ---------------- | ---------- | ------------------------------ |
-| items_price      | integer    | null: false                    |
 | user             | references | null: false, foreign_key: true |
 | item             | references | null: false, foreign_key: true |
 
@@ -61,17 +60,17 @@
 
 
 
-## shipping_info テーブル
+## shipping_infos テーブル
 
 | Column           | Type       | Options                        |
 | ---------------- | ---------- | ------------------------------ |
 | post_code        | string     | null: false                    |
 | municipalities   | string     | null: false                    |
 | street_number    | string     | null: false                    |
-| building_name    | string     | null: false                    |
-| phone_number     | integer    | null: false                    |
-| prefectures_id   | integer    | null: false                    |ActiveHash
-| purchases        | references | null: false, foreign_key: true |
+| building_name    | string     |                                |
+| phone_number     | string     | null: false                    |
+| prefecture_id    | integer    | null: false                    |ActiveHash
+| purchase         | references | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :purchase
@@ -90,55 +89,6 @@
 ### Association
 - belongs_to :room
 - belongs_to :user
-
-
-## category_activehash テーブル
-| Column   | Type    | Options     |
-| -------- | ------- | ----------- |
-| category | string  | null: false  |
-
-### Assoceation
-- has_many  :items
-
-
-
-## product_status_activehash テーブル
-| Column  | Type    | Options      |
-| ------- | ------- | ------------ |
-| status  | string  | null: false  |
-
-### Assoceation
-- has_many  :items
-
-
-
-## delivery_charge_activehash テーブル
-| Column  | Type    | Options      |
-| ------- | ------- | ------------ |
-| charge  | integer | null: false  |
-
-### Assoceation
-- has_many  :items
-
-
-
-## prefectures_activehash テーブル
-| Column      | Type    | Options      |
-| ----------- | ------- | ------------ |
-| prefectures | string  | null: false  |
-
-### Assoceation
-- has_many  :items
-- has_many  :shipping_info 
-
-
-
-## shipping_date_activehash テーブル
-| Column  | Type    | Options      |
-| ------- | ------- | ------------ |
-| name    | string  | null: false  |
-### Assoceation
-- has_many  :items
 
 
 
