@@ -1,24 +1,81 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column              | Type   | Options     |
+| ------------------- | ------ | ----------- |
+| nickname            | string | null: false |
+| email               | email  | null: false |
+| encrypted_password  | string | null: false |
+| fist_name           | string | null: false |
+| last_name           | string | null: false |
+| first_name_kana     | string | null: false |
+| last_name_kana      | string | null: false |
+| birthday_year       | date   | null: false |
+| birthday_month      | date   | null: false |
+| birthday            | date   | null: false |
 
-* Ruby version
+### Association
 
-* System dependencies
+- has_many :items
+- has_many :comments
+- has_many :purchases
 
-* Configuration
+## items テーブル
 
-* Database creation
+| Column              | Type       | Options                        |
+| ------------------- | ---------- | ------------------------------ |
+| image               | blob       | null: false                    |
+| name                | string     | null: false                    |
+| explanation         | textarea   | null: false                    |
+| category            | string     | null: false                    |
+| product_status      | string     | null: false                    |
+| delivery_charge     | int        | null: false                    |
+| shipping_area       | string     | null: false                    |
+| shipping_date       | date       | null: false                    |
+| price               | int        | null: false                    |
+| user                | references | null: false, foreign_key: true |
+### Association
 
-* Database initialization
+- has_many   :comments
+- has_one    :purchase
+- belongs_to :user
 
-* How to run the test suite
+## purchasesテーブル
 
-* Services (job queues, cache servers, search engines, etc.)
+| Column           | Type       | Options                        |
+| ---------------- | ---------- | ------------------------------ |
+| card_namber      | int        | null: false,                   |
+| expiration_month | date       | null: false                    |
+| expiration_year  | date       | null: false                    |
+| security_code    | int        | null: false                    |
+| post_code        | int        | null: false                    |
+| prefectures      | string     | null: false                    |
+| municipalities   | string     | null: false                    |
+| street_number    | int        | null: false                    |
+| phone_number     | phone      | null: false                    |
+| items_price      | int        | null: false                    |
+| user             | references | null: false, foreign_key: true |
+| room             | references | null: false, foreign_key: true |
 
-* Deployment instructions
 
-* ...
+
+### Association
+
+- belongs_to :user
+- belongs_to :item
+
+## comments テーブル
+
+| Column  | Type       | Options                        |
+| ------- | ---------- | ------------------------------ |
+| content | string     | null: false                    |
+| user    | references | null: false, foreign_key: true |
+| room    | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :room
+- belongs_to :user
+
+
