@@ -30,10 +30,10 @@ RSpec.describe Item, type: :model do
       it '価格が空では登録できない' do
         @item.price = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price can't be blank")
+        expect(@item.errors.full_messages).to include("Price 半角数字で記入してください")
       end
-      it '価格が¥999999999より大きいと登録できない' do
-        @item.price = '1999999999'
+      it '価格が¥9,999,999より大きいと登録できない' do
+        @item.price = '10000000'
         @item.valid?
         expect(@item.errors.full_messages).to include("Price 範囲は¥300~¥9,999,999の間です")
       end
@@ -45,7 +45,12 @@ RSpec.describe Item, type: :model do
       it '価格半角数字でなければ登録できない' do
         @item.price = '１０００'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price 半角数字で記入してください")
+        expect(@item.errors.full_messages).to include("Price 範囲は¥300~¥9,999,999の間です")
+      end
+      it '価格に小数点以下の数字は含めない' do
+        @item.price = '1000.5'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price 範囲は¥300~¥9,999,999の間です")
       end
       it '画像が添付されてないと登録できない' do
         @item.image = nil
