@@ -8,13 +8,5 @@ FactoryBot.define do
     phone_number { '09011410806' }
     token {"tok_abcdefghijk00000000000000000"}
 
-
-
-
-    association :user
-    association :item
-    # after(:build) do |item|
-    #   item.image.attach(io: File.open('public/images/test_image.png'), filename: 'test_image.png')
-
   end
 end
