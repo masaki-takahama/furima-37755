@@ -16,7 +16,7 @@
 ### Association
 - has_many :items
 - has_many :comments
-- has_many :purchases
+- has_many :orders
 
 
 
@@ -36,7 +36,7 @@
 
 ### Association
 - has_many   :comments
-- has_one    :purchase
+- has_one    :order
 - belongs_to :user
 - belongs_to :category_activehash
 - belongs_to :product_status_activehash
@@ -46,12 +46,12 @@
 
 
 
-## purchasesテーブル
+## ordersテーブル
 
 | Column           | Type       | Options                        |
 | ---------------- | ---------- | ------------------------------ |
-| user             | references | null: false, foreign_key: true |
-| item             | references | null: false, foreign_key: true |
+| user_id          | references | null: false, foreign_key: true |
+| item_id          | references | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :user
@@ -64,16 +64,16 @@
 
 | Column           | Type       | Options                        |
 | ---------------- | ---------- | ------------------------------ |
-| post_code        | string     | null: false                    |
+| postal_code      | string     | null: false                    |
 | municipalities   | string     | null: false                    |
 | street_number    | string     | null: false                    |
 | building_name    | string     |                                |
 | phone_number     | string     | null: false                    |
 | prefecture_id    | integer    | null: false                    |ActiveHash
-| purchase         | references | null: false, foreign_key: true |
+| order_id         | references | null: false, foreign_key: true |
 
 ### Association
-- belongs_to :purchase
+- belongs_to :order
 - belongs_to :prefectures_activehash
 
 
